@@ -1,0 +1,16 @@
+Log con Claps en terminal "clasp login"
+Crear Proyecto "clasp create" webapp
+crear archivo funciones
+crear web.html
+En la terminal hacer un "clasp push" para subir los cambios a Apps Script
+ir a script.google.com (Apps Scripts) y actualizar allí deberia estar el proyecto creado
+ir a Nueva Implementacion, colocarle la version y aceptar
+ir a Implementaciones de prueba y ocupar ese link para pruebas ya que permite seguir los cambios que se van realizando
+Crear css.html y js.html
+Crear main.html   header.html   footer.html
+En web.html agregar los diferentes trozos de html para trabajarlos desde esos archivos indiviuales y no desde web.html
+En el css.html agregar antes de la etiqueta boostrap 5 y bosstrap icons en install y el CDN
+En Apps Script habilitar el Manifiesto y hacer un pull en VSCode
+
+
+
