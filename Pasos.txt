@@ -1,3 +1,5 @@
+https://www.youtube.com/watch?v=YQw_sLZqU9U&list=PLG1qdjD__qH4dyXq4sM03Rf0RFhB_4tbm&index=45
+
 Log con Claps en terminal "clasp login"
 Crear Proyecto "clasp create" webapp
 crear archivo funciones
