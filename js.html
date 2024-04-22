@@ -11,7 +11,19 @@
                 let tablaHeader = document.createElement('thead');
                 let tablaBody = document.createElement('tbody');
 
-                for (let i = 0; i < obj.length; i++)
+                //Header de la tabla
+                let primeraFila = document.createElement('tr');
+                for(let i = 0; i < obj[0].length; i++)
+                {
+                    let celda = document.createElement('td');
+                    celda.textContent = obj[0][i];
+                    primeraFila.appendChild(celda);
+                }
+                tablaHeader.appendChild(primeraFila);
+                tabla.appendChild(tablaHeader);
+
+                //Body de la tabla
+                for (let i = 1; i < obj.length; i++)
                  {
                     let fila = document.createElement('tr');
                     for (let j = 0; j < obj[i].length; j++)
@@ -20,14 +32,7 @@
                         celda.textContent = obj[i][j];
                         fila.appendChild(celda);
                     }
-                    if (i == 0) 
-                    {
-                        tablaHeader.appendChild(fila);
-                        tabla.appendChild(tablaHeader);
-                    } else 
-                    {
                         tablaBody.appendChild(fila);
-                    }
                 }
                 
                     /*                 Array.from(obj).forEach((filaActual, i) => {
