@@ -1,5 +1,5 @@
 <main>
-     <!-- Botones -->
+    <!-- Botones -->
     <div class="d-flex justify-content-center mb-4">
         <button class="btn btn-success m-3" onclick="crearTablaContactos()"> Mostrar Contactos</button>
     </div>
@@ -7,6 +7,23 @@
     <!-- Tabla de Contactos -->
     <div class="container-sm mb-4 w-50" id="divContactos">
 
+    </div>
+
+    <!-- Notificaciones -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <!-- Toast -->
+        <div id="notificacion" class="toast aling-items-center text-white border-0" role="alert" aria-live="assertive"
+            aria-atomic="true">
+
+            <div class="toast-header p-0">
+                <div class="icono-notificacion"><i id="iconoNotificacion"></i></div>
+                <strong class="me-auto" id="tituloNotificacion"></strong>
+                <button type="button" class="btn-close m-2" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+
+            <div class="toast-body" id="mensajeNotificacion"></div>
+
+        </div>
     </div>
 
 </main>
