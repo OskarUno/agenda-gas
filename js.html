@@ -1,7 +1,12 @@
 <script>
     function crearTablaContactos() {
-        let tabla = document.getElementById('tablaContactos')
-        if (tabla) tabla.remove();
+
+        // Borrar Tabla si existe
+        eliminarTabla()
+
+        // Crear Loader
+        crearLoaderLoading('divContactos');
+
         google.script.run
             .withSuccessHandler(crearTablaContactosCorrectamente)
             .withFailureHandler(crearTablaContactosError)
@@ -36,23 +41,6 @@
             tablaBody.appendChild(fila);
         }
 
-        /*                 Array.from(obj).forEach((filaActual, i) => {
-                            let fila = document.createElement('tr');
-                            filaActual.forEach(celdaActual => {
-                                let celda = document.createElement('td');
-                                celda.textContent = celdaActual;
-                                fila.appendChild(celda);
-                            });
-                            if (i == 0) {
-                                tablaHeader.appendChild(fila);
-                                tabla.appendChild(tablaHeader);
-                            }
-                            else {
-                                tablaBody.appendChild(fila);
-                            }
-                        }); */
-
-
         //Agregar clases a la cabecera
         tablaHeader.classList.add('table-dark');
         //Agregar el cuerpo a la tabla
@@ -66,11 +54,17 @@
         crearNotificacionOk('Contacto obtenido correctamente', 'Todo en orden');
         // crearNotificacion(NOTIFICACION_DANGER, 'Error al Crear', 'Fallo');
         // crearNotificacion(NOTIFICACION_WARNING, 'Error inesperador', 'Peligro');
+
+        //Eliminar Loader
+        eliminarLoader();
     }
 
     function crearTablaContactosError() {
         //Mostrar notificacion error
         crearNotificacionError('Error al Crear', 'Fallo');
+
+        //Eliminar Loader
+        eliminarLoader();
     }
 
     function crearNotificacion(mensaje, titulo) {
@@ -119,6 +113,41 @@
 
     }
 
-
+    function crearLoader(elementoPadre) {
+        eliminarLoader();
+        let loader = document.createElement('div');
+        loader.id = 'loader';
+        loader.appendChild(document.createElement('div'));
+        loader.appendChild(document.createElement('div'));
+        loader.appendChild(document.createElement('div'));
+        loader.appendChild(document.createElement('div'));
        
+        return document.getElementById(elementoPadre).appendChild(loader);
+    }
+
+    function crearLoaderSpinner(elementoPadre) {
+        let loader = crearLoader(elementoPadre);
+        loader.classList.add('spinner');
+    }
+
+    function crearLoaderLoading(elementoPadre) {
+        let loader = crearLoader(elementoPadre);
+        loader.classList.add('loading');
+    }
+
+
+    function crearLoaderBarras(elementoPadre) {
+        let loader = crearLoader(elementoPadre);
+        loader.classList.add('lds-facebook');
+    }
+
+    function eliminarLoader() {
+        let loader = document.getElementById('loader');
+        if (loader) loader.remove();
+    }
+
+    function eliminarTabla() {
+        let tabla = document.getElementById('tablaContactos')
+        if (tabla) tabla.remove();
+    }
 </script>
