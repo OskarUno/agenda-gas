@@ -7,6 +7,10 @@
         let nombre = document.getElementById('nombre').value;
         let correo = document.getElementById('correo').value;
 
+        //Cerrar Modal
+        // Returns a Bootstrap modal instance
+        bootstrap.Modal.getInstance(document.getElementById('crearContactoModal')).hide();
+        
         //Eliminar Tabla
         eliminarTabla();
 

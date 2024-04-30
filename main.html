@@ -1,24 +1,14 @@
 <main>
 
 
+    <!-- Botones Superiores -->
     <div class="d-flex justify-content-center my-3">
-        <!-- Formulario -->
-        <form onsubmit="insertarContacto()"
-            method="dialog" id="formulario">
-            <div class="mb-3">
-                <label for="nombre" class="form-label">Introduce el nombre del contacto</label>
-                <input type="text" class="form-control" name="nombre" id="nombre">
-            </div>
-
-            <div class="mb-3">
-                <label for="correo" class="form-label">Introduce el correo del contacto</label>
-                <input type="email" class="form-control" name="correo" id="correo">
-            </div>
-            
-            <!-- Botones -->
-            <button type="button" class="btn btn-success m-3" onclick="crearTablaContactos()"> Mostrar Contactos</button>
-            <button type="submit" class="btn btn-primary">Crear Contacto</button>
-        </form>
+        <button type="button" class="btn btn-success m-2" onclick="crearTablaContactos()"> Mostrar
+            Contactos</button>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#crearContactoModal">
+            Nuevo Contacto
+        </button>
     </div>
 
     <!-- Tabla de Contactos -->
@@ -44,4 +34,37 @@
         </div>
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="crearContactoModal" tabindex="-1" aria-labelledby="tituloCrearContactoModal"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tituloCrearContactoModal">Nuevo Contacto</h5>
+
+                </div>
+
+                <!-- Formulario Crear Contacto-->
+                <form onsubmit="insertarContacto()" method="dialog" id="formulario">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Introduce el nombre del contacto</label>
+                            <input type="text" class="form-control" name="nombre" id="nombre" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="correo" class="form-label">Introduce el correo del contacto</label>
+                            <input type="email" class="form-control" name="correo" id="correo" required>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success">Crear Contacto</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
 </main>
