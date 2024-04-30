@@ -1,4 +1,50 @@
 <script>
+
+
+    function insertarContacto() {
+
+        // Obtener Datos
+        let nombre = document.getElementById('nombre').value;
+        let correo = document.getElementById('correo').value;
+
+        //Eliminar Tabla
+        eliminarTabla();
+
+        // Crear Loader
+        crearLoaderLoading('divContactos');
+
+        google.script.run
+            .withSuccessHandler(contatoInsertadoCorrectamente)
+            .withFailureHandler(contactoInsertadoError)
+            .insertarContacto(nombre, correo);
+    }
+
+    function contatoInsertadoCorrectamente() {
+        //Limpiamos los input
+        document.getElementById('nombre').value = '';
+        document.getElementById('correo').value = '';
+
+        //Mostrar Notificacion
+        crearNotificacionOk('Contacto Creado Correctamente', 'CONTACTO OK')
+
+        //Eliminar Loader
+        eliminarLoader();
+
+        //Mostrar Tabla
+        crearTablaContactos();
+    }
+
+    function contactoInsertadoError() {
+        //Mostrar Notificacion
+        crearNotificacionError('No se ha podido insertar el contacto', 'CONTACTO ERROR')
+
+        //Eliminar Loader
+        eliminarLoader();
+
+        //Mostrar Tabla
+        crearTablaContactos();
+    }
+
     function crearTablaContactos() {
 
         // Borrar Tabla si existe
@@ -121,7 +167,7 @@
         loader.appendChild(document.createElement('div'));
         loader.appendChild(document.createElement('div'));
         loader.appendChild(document.createElement('div'));
-       
+
         return document.getElementById(elementoPadre).appendChild(loader);
     }
 
