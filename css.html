@@ -16,6 +16,7 @@
         --color-amarillo-claro: #f9e79f;
         --color-amarillo-oscuro: #d4ac0d;
         --color-gris-claro: #e5e7e9;
+        --color-gris-oscuro: #515A5A;
     }
 
     header {
@@ -37,7 +38,10 @@
     .icono-notificacion {
         font-size: 1.5rem;
         padding: 0.5rem;
+    }
 
+    .div-notificaicones{
+        z-index: 11;
     }
 
     /* BARRAS  <div class="lds-facebook"><div></div><div></div><div></div></div> */
@@ -93,54 +97,80 @@
 
 
     /* HTML: <div class="loader"></div> */
-.loader1 {
-  width: 45px;
-  aspect-ratio: 1;
-  --c: no-repeat linear-gradient(#000 0 0);
-  background: 
-    var(--c) 0%   100%,
-    var(--c) 50%  100%,
-    var(--c) 100% 100%;
-  animation: l3 1s infinite linear;
-}
-@keyframes l3 {
-  0%  {background-size: 20% 100%,20% 100%,20% 100%}
-  20% {background-size: 20% 60% ,20% 100%,20% 100%}
-  40% {background-size: 20% 80% ,20% 60% ,20% 100%}
-  60% {background-size: 20% 100%,20% 80% ,20% 60% }
-  80% {background-size: 20% 100%,20% 100%,20% 80% }
-  100%{background-size: 20% 100%,20% 100%,20% 100%}
-}
+    .loader1 {
+        width: 45px;
+        aspect-ratio: 1;
+        --c: no-repeat linear-gradient(#000 0 0);
+        background:
+            var(--c) 0% 100%,
+            var(--c) 50% 100%,
+            var(--c) 100% 100%;
+        animation: l3 1s infinite linear;
+    }
+
+    @keyframes l3 {
+        0% {
+            background-size: 20% 100%, 20% 100%, 20% 100%
+        }
+
+        20% {
+            background-size: 20% 60%, 20% 100%, 20% 100%
+        }
+
+        40% {
+            background-size: 20% 80%, 20% 60%, 20% 100%
+        }
+
+        60% {
+            background-size: 20% 100%, 20% 80%, 20% 60%
+        }
+
+        80% {
+            background-size: 20% 100%, 20% 100%, 20% 80%
+        }
+
+        100% {
+            background-size: 20% 100%, 20% 100%, 20% 100%
+        }
+    }
 
 
-/* HTML: <div class="loading"></div> */
-.loading {
-  width: fit-content;
-  font-weight: bold;
-  font-family: sans-serif;
-  color: var(--color-azul-claro);
-  font-size: 30px;
-  padding-bottom: 8px;
-  background: linear-gradient(currentColor 0 0) 0 100%/0% 3px no-repeat;
-  animation: l1 2s linear infinite;
-}
-.loading:before {
-  content:"Cargando..."
-}
-@keyframes l1 {to{background-size: 100% 3px}}
+    /* HTML: <div class="loading"></div> */
+    .loading {
+        width: fit-content;
+        font-weight: bold;
+        font-family: sans-serif;
+        color: var(--color-azul-claro);
+        font-size: 30px;
+        padding-bottom: 8px;
+        background: linear-gradient(currentColor 0 0) 0 100%/0% 3px no-repeat;
+        animation: l1 2s linear infinite;
+    }
+
+    .loading:before {
+        content: "Cargando..."
+    }
+
+    @keyframes l1 {
+        to {
+            background-size: 100% 3px
+        }
+    }
 
 
-/* HTML: <div class="spinner"></div> */
-.spinner {
-  width: 50px;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  border: 8px solid lightblue;
-  border-right-color: orange;
-  animation: l2 1s infinite linear;
-}
-@keyframes l2 {to{transform: rotate(1turn)}}
+    /* HTML: <div class="spinner"></div> */
+    .spinner {
+        width: 50px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        border: 8px solid lightblue;
+        border-right-color: orange;
+        animation: l2 1s infinite linear;
+    }
 
-
-
+    @keyframes l2 {
+        to {
+            transform: rotate(1turn)
+        }
+    }
 </style>

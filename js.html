@@ -32,7 +32,7 @@
         document.getElementById('telf').value = '';
 
         //Mostrar Notificacion
-        crearNotificacionOk('Contacto Creado Correctamente', 'CONTACTO OK');
+        crearNotificacionContacto('Contacto Creado Correctamente', 'CONTACTO OK');
 
         //Eliminar Loader
         eliminarLoader();
@@ -184,7 +184,7 @@
             insertarContacto();
 
         //Obtener Datos
-        
+
         document.getElementById('nombre').value = '';
         document.getElementById('apellidos').value = '';
         document.getElementById('correo').value = '';
@@ -243,7 +243,7 @@
     }
 
     function contactoModificadoCorrectamente() {
-        crearNotificacionOk('Contacto Modificado Correctamente', 'Modificacion OK');
+        crearNotificacionContacto('Contacto Modificado Correctamente', 'Modificacion OK');
         eliminarLoader();
         crearTablaContactos();
     }
@@ -265,7 +265,7 @@
     }
 
     function contactoBorradoCorrectamente() {
-        crearNotificacionOk('Contacto Borrado Correctamente', 'BORRADO OK');
+        crearNotificacionBorrar('Contacto Borrado Correctamente', 'BORRADO OK');
         eliminarLoader();
         crearTablaContactos();
     }
@@ -282,57 +282,6 @@
     function crearTablaContactosError() {
         crearNotificacionError('Error al Crear', 'Fallo');
         eliminarLoader();
-    }
-
-    function crearNotificacion(mensaje, titulo) {
-        document.getElementById('mensajeNotificacion').textContent = mensaje;
-        document.getElementById('tituloNotificacion').textContent = titulo;
-        let elementoNotificacion = document.getElementById('notificacion');
-        bootstrap.Toast.getOrCreateInstance(elementoNotificacion).show();
-    }
-
-    function crearNotificacionOk(mensaje, titulo) {
-        crearNotificacion(mensaje, titulo);
-        crearIconoNotificacionOk();
-        crearColorNotificacion('--color-verde-oscuro');
-    }
-
-    function crearNotificacionError(mensaje, titulo) {
-        crearNotificacion(mensaje, titulo);
-        crearIconoNotificacionOk();
-        crearColorNotificacion('--color-rojo-oscuro');
-    }
-
-    function crearNotificacionAdvertencia(mensaje, titulo) {
-        crearNotificacion(mensaje, titulo);
-        crearIconoNotificacionOk();
-        crearColorNotificacion('--color-amarillo-oscuro');
-    }
-
-    function crearIconoNotificacionOk() {
-        document.getElementById('iconoNotificacion').className = '';
-        document
-            .getElementById('iconoNotificacion')
-            .classList.add('bi', 'bi-check2-square');
-    }
-
-    function crearIconoNotificacionError() {
-        document.getElementById('iconoNotificacion').className = '';
-        document.getElementById('iconoNotificacion').classList.add('bi', 'bi-bug');
-    }
-
-    function crearIconoNotificacionAdvertencia() {
-        document.getElementById('iconoNotificacion').className = '';
-        document
-            .getElementById('iconoNotificacion')
-            .classList.add('bi', 'bi-exclamation-square');
-    }
-
-    function crearColorNotificacion(color) {
-        let elementoNotificacion = document.getElementById('notificacion');
-        elementoNotificacion.style.backgroundColor = getComputedStyle(
-            document.documentElement
-        ).getPropertyValue(color);
     }
 
     function crearLoader(elementoPadre) {
@@ -371,4 +320,100 @@
         let tabla = document.getElementById('tablaContactos');
         if (tabla) tabla.remove();
     }
+
+    //
+    // N O T I F I C A C I O N E S  -------------------------------------------------------
+    //
+
+    const ICONO_CHECK = 'bi-check2-square';
+    const ICONO_PAPELERA = 'bi-trash';
+    const ICONO_CONTACTO = 'bi-person-plus-fill';
+    const ICONO_ERROR = 'bi-bug';
+    const ICONO_ADVERTENCIA = 'bi-exclamation-square';
+
+    function crearNotificacionOk(mensaje, titulo) {
+        crearNotificacion(titulo, mensaje, ICONO_CHECK, '--color-verde-oscuro');
+    }
+
+    function crearNotificacionError(mensaje, titulo) {
+        crearNotificacion(titulo, mensaje, ICONO_ERROR, '--color-rojo-oscuro');
+    }
+
+    function crearNotificacionContacto(mensaje, titulo) {
+        crearNotificacion(titulo, mensaje, ICONO_CONTACTO, '--color-azul-oscuro');
+    }
+
+    function crearNotificacionAdvertencia(mensaje, titulo) {
+        crearNotificacion(titulo, mensaje, ICONO_ADVERTENCIA, '--color-amarillo-oscuro');
+    }
+
+    function crearNotificacionBorrar(mensaje, titulo) {
+        crearNotificacion(titulo, mensaje, ICONO_PAPELERA, '--color-gris-oscuro');
+    }
+
+    function crearNotificacion(titulo, mensaje, icono, color) {
+        let notificacion = crearAtributosNotificacion();
+        let cabeceraNotificacion = crearCabeceraNotificacion(titulo, icono);
+        let cuerpoNotificacion = crearCuerpoNotificacion(mensaje);
+
+        //Agregar Cabecera y Cuerpo
+        notificacion.appendChild(cabeceraNotificacion);
+        notificacion.appendChild(cuerpoNotificacion);
+
+        //Establecer Color
+        notificacion.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue(color);
+
+        //Evento
+        notificacion.addEventListener('hidden.bs.toast', function () {
+            this.remove();
+        });
+
+        //Agregamos al contenedor de notificaciones
+        document.getElementById('contenedorNotificaciones').appendChild(notificacion);
+
+        //Instanciar y Mostrar
+        bootstrap.Toast.getOrCreateInstance(notificacion).show();
+    }
+
+    function crearCuerpoNotificacion(mensaje) {
+        let cuerpoNotificacion = document.createElement('div');
+        cuerpoNotificacion.classList.add('toast-body');
+        cuerpoNotificacion.textContent = mensaje;
+        return cuerpoNotificacion;
+    }
+
+    function crearAtributosNotificacion() {
+        let notificacion = document.createElement('div');
+        notificacion.classList.add('toast', 'aling-items-center', 'text-white', 'border-0')
+        notificacion.setAttribute('role', 'alert');
+        notificacion.setAttribute('aria-live', 'assertive');
+        notificacion.setAttribute('aria-atomic', 'true');
+        return notificacion;
+    }
+
+    function crearCabeceraNotificacion(titulo, icono) {
+        //Crear Cabecera
+        let cabeceraNotificacion = document.createElement('div');
+        cabeceraNotificacion.classList.add('toast-header', 'p-0');
+
+        //Crear icono, pasando el contenedor
+        crearIconoNotificacion(cabeceraNotificacion, icono);
+
+        //Crear el Titulo
+        let tituloNotificacion = document.createElement('strong');
+        tituloNotificacion.classList.add('mx-2');
+        tituloNotificacion.textContent = titulo;
+        cabeceraNotificacion.appendChild(tituloNotificacion);
+        return cabeceraNotificacion;
+    }
+
+    function crearIconoNotificacion(contenedor, icono) {
+        let divIcono = document.createElement('div');
+        let iconoNotificacion = document.createElement('i');
+        divIcono.classList.add('icono-notificacion');
+        iconoNotificacion.classList.add('bi', icono);
+        divIcono.appendChild(iconoNotificacion);
+        contenedor.appendChild(divIcono);
+    }
+
 </script>

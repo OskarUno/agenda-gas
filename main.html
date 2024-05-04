@@ -1,5 +1,5 @@
 <main>
-    <!-- Botones Superiores -->
+    <!-- Botones Superiores --------------------------------------->
     <div class="d-flex justify-content-center my-3">
         <button type="button" class="btn btn-success m-2" onclick="crearTablaContactos()"> Mostrar Contactos</button>
         <button type="button" class="btn btn-primary m-2" onclick="abrirModalCrearContacto()">
@@ -7,30 +7,17 @@
         </button>
     </div>
 
-    <!-- Tabla de Contactos -->
+    <!-- Tabla de Contactos  -------------------------------------->
     <div class="container col-12 col-lg-6 d-flex justify-content-center" id="divContactos"></div>
 
-
-
-
-    <!-- Notificaciones -->
-    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-        <!-- Toast -->
-        <div id="notificacion" class="toast aling-items-center text-white border-0" role="alert" aria-live="assertive"
-            aria-atomic="true">
-
-            <div class="toast-header p-0">
-                <div class="icono-notificacion"><i id="iconoNotificacion"></i></div>
-                <strong class="me-auto" id="tituloNotificacion"></strong>
-                <button type="button" class="btn-close m-2" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-
-            <div class="toast-body" id="mensajeNotificacion"></div>
-
+    <!-- Notificaciones --------------------------------------->
+    <div class="div-notificaicones position-fixed bottom-0 end-0 p-3">
+        <div class="toast-container" id="contenedorNotificaciones">
+            <!--Aqui van las notificaciones-->
         </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Modal --------------------------------------->
     <div class="modal fade" id="crearContactoModal" tabindex="-1" aria-labelledby="tituloCrearContactoModal"
         aria-hidden="true">
         <div class="modal-lg modal-dialog">
@@ -53,8 +40,8 @@
                             </div>
                             <div class="col-8">
                                 <label for="nombre" class="form-label">Apellidos</label>
-                                <input type="text" class="form-control" name="apellidos" id="apellidos" pattern="[^0-9]*"
-                                    title="Apellidos no puede contener numeros" required>
+                                <input type="text" class="form-control" name="apellidos" id="apellidos"
+                                    pattern="[^0-9]*" title="Apellidos no puede contener numeros" required>
                             </div>
                         </div>
 
@@ -64,7 +51,7 @@
                             <input type="email" class="form-control me-4" name="correo" id="correo" required>
                             <span class="input-group-text"><i class="bi bi-telephone-fill"></i></span>
                             <input type="tel" class="form-control" name="telf" id="telf" pattern="[\d]{9,11}"
-                            title="El telefono debe contener entre 9 y 11 digitos numericos"  required>
+                                title="El telefono debe contener entre 9 y 11 digitos numericos" required>
                         </div>
                     </div>
 
