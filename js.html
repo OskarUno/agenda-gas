@@ -1,8 +1,5 @@
 <script>
-
-
     function insertarContacto() {
-
         // Obtener Datos
         let nombre = document.getElementById('nombre').value;
         let apellidos = document.getElementById('apellidos').value;
@@ -11,7 +8,9 @@
 
         //Cerrar Modal
         // Returns a Bootstrap modal instance
-        bootstrap.Modal.getInstance(document.getElementById('crearContactoModal')).hide();
+        bootstrap.Modal.getInstance(
+            document.getElementById('crearContactoModal')
+        ).hide();
 
         //Eliminar Tabla
         eliminarTabla();
@@ -33,7 +32,7 @@
         document.getElementById('telf').value = '';
 
         //Mostrar Notificacion
-        crearNotificacionOk('Contacto Creado Correctamente', 'CONTACTO OK')
+        crearNotificacionOk('Contacto Creado Correctamente', 'CONTACTO OK');
 
         //Eliminar Loader
         eliminarLoader();
@@ -44,7 +43,10 @@
 
     function contactoInsertadoError() {
         //Mostrar Notificacion
-        crearNotificacionError('No se ha podido insertar el contacto', 'CONTACTO ERROR')
+        crearNotificacionError(
+            'No se ha podido insertar el contacto',
+            'CONTACTO ERROR'
+        );
 
         //Eliminar Loader
         eliminarLoader();
@@ -54,9 +56,8 @@
     }
 
     function crearTablaContactos() {
-
         // Borrar Tabla si existe
-        eliminarTabla()
+        eliminarTabla();
 
         // Crear Loader
         crearLoaderLoading('divContactos');
@@ -82,10 +83,10 @@
             primeraFila.appendChild(celda);
         }
 
-        //Agregar columna OPCIONES 
+        //Agregar columna OPCIONES
         let celdaOcpiones = document.createElement('td');
         celdaOcpiones.textContent = 'OPCIONES';
-        celdaOcpiones.classList.add('text-center')
+        celdaOcpiones.classList.add('text-center');
         primeraFila.appendChild(celdaOcpiones);
 
         //Agregar fila al header de la tabla
@@ -102,7 +103,7 @@
             }
 
             //Agregar los Botoens a la fila
-            fila.appendChild(crearCeldaBotones(i + 1));
+            fila.appendChild(crearCeldaBotones(i + 1, obj[i]));
             tablaBody.appendChild(fila);
         }
 
@@ -111,7 +112,14 @@
         //Agregar el cuerpo a la tabla
         tabla.appendChild(tablaBody);
         //Agregamos clases a la tabla
-        tabla.classList.add('table', 'table-striped', 'border', 'border-4', 'table-success', 'border-dark');
+        tabla.classList.add(
+            'table',
+            'table-striped',
+            'border',
+            'border-4',
+            'table-success',
+            'border-dark'
+        );
         //Agregar tabla a la pagina
         document.getElementById('divContactos').appendChild(tabla);
 
@@ -124,7 +132,8 @@
         eliminarLoader();
     }
 
-    function crearCeldaBotones(numFila) {
+    function crearCeldaBotones(numFila, datosContacto) {
+        // BOTON BORRAR
         //Crear Celda
         let celda = document.createElement('td');
         celda.classList.add('text-center');
@@ -140,9 +149,11 @@
         iconoBorrar.classList.add('bi', 'bi-trash');
         botonBorrar.appendChild(iconoBorrar);
 
+        // BOTON MODIFICAR
         //Crear boton modificar
         let botonModificar = document.createElement('button');
-        // botonModificar.onclick = () => borrarContacto(numFila);
+        botonModificar.onclick = () =>
+            abrilModalModificarContacto(numFila, datosContacto);
         botonModificar.classList.add('btn', 'btn-warning', 'm-1');
         //botonModificar.textContent = 'Modificar';
 
@@ -156,7 +167,91 @@
         celda.appendChild(botonModificar);
 
         return celda;
+    }
 
+    function abrirModalCrearContacto() {
+        //Boton Crear Contacto
+        let boton = document.getElementById('botonCrearModificar');
+        boton.textContent = 'Crear Contacto';
+        boton.classList = '';
+        boton.classList.add('btn', 'btn-success');
+
+        //Cambiar titulo
+        document.getElementById('tituloModal').textContent = 'Crear Contacto';
+
+        //Modificar Submit
+        document.getElementById('formulario').onsubmit = () =>
+            insertarContacto();
+
+        //Obtener Datos
+        
+        document.getElementById('nombre').value = '';
+        document.getElementById('apellidos').value = '';
+        document.getElementById('correo').value = '';
+        document.getElementById('telf').value = '';
+
+        //Abrir Modal
+        bootstrap.Modal.getOrCreateInstance(
+            document.getElementById('crearContactoModal')).show();
+    }
+
+    function abrilModalModificarContacto(numFila, datosContacto) {
+        //Boton Modificar
+        let boton = document.getElementById('botonCrearModificar');
+        boton.textContent = 'Modificar Contacto';
+        boton.classList = '';
+        boton.classList.add('btn', 'btn-warning');
+
+        //Cambiar titulo
+        document.getElementById('tituloModal').textContent = 'Modificar Contacto';
+
+        //Modificar Submit
+        document.getElementById('formulario').onsubmit = () =>
+            modificarContacto(numFila);
+
+        //Obtener Datos
+        document.getElementById('nombre').value = datosContacto[0];
+        document.getElementById('apellidos').value = datosContacto[1];
+        document.getElementById('correo').value = datosContacto[2];
+        document.getElementById('telf').value = datosContacto[3];
+
+        //Abrir Modal
+        bootstrap.Modal.getOrCreateInstance(
+            document.getElementById('crearContactoModal')
+        ).show();
+    }
+
+    function modificarContacto(numFila) {
+        //Cerrar Modal
+        bootstrap.Modal.getOrCreateInstance(
+            document.getElementById('crearContactoModal')
+        ).hide();
+
+        //Obtener nuevos datos a partir del formulario
+        let nombre = document.getElementById('nombre').value;
+        let apellidos = document.getElementById('apellidos').value;
+        let correo = document.getElementById('correo').value;
+        let telf = document.getElementById('telf').value;
+
+        eliminarTabla();
+        crearLoaderLoading('divContactos');
+
+        google.script.run
+            .withSuccessHandler(contactoModificadoCorrectamente)
+            .withFailureHandler(contactoModificadoError)
+            .modificarContacto(numFila, { nombre, apellidos, correo, telf });
+    }
+
+    function contactoModificadoCorrectamente() {
+        crearNotificacionOk('Contacto Modificado Correctamente', 'Modificacion OK');
+        eliminarLoader();
+        crearTablaContactos();
+    }
+
+    function contactoModificadoError() {
+        crearNotificacionError('No se ha podido modificar el contacto', 'BORRADO ERROR');
+        eliminarLoader();
+        crearTablaContactos();
     }
 
     function borrarContacto(numFila) {
@@ -170,13 +265,16 @@
     }
 
     function contactoBorradoCorrectamente() {
-        crearNotificacionOk('Contacto Borrado Correctamente', 'BORRADO OK')
+        crearNotificacionOk('Contacto Borrado Correctamente', 'BORRADO OK');
         eliminarLoader();
         crearTablaContactos();
     }
 
     function contactoBorradoError() {
-        crearNotificacionError('No se ha podido borrar el contacto', 'BORRADO ERROR')
+        crearNotificacionError(
+            'No se ha podido borrar el contacto',
+            'BORRADO ERROR'
+        );
         eliminarLoader();
         crearTablaContactos();
     }
@@ -213,7 +311,9 @@
 
     function crearIconoNotificacionOk() {
         document.getElementById('iconoNotificacion').className = '';
-        document.getElementById('iconoNotificacion').classList.add('bi', 'bi-check2-square');
+        document
+            .getElementById('iconoNotificacion')
+            .classList.add('bi', 'bi-check2-square');
     }
 
     function crearIconoNotificacionError() {
@@ -223,13 +323,16 @@
 
     function crearIconoNotificacionAdvertencia() {
         document.getElementById('iconoNotificacion').className = '';
-        document.getElementById('iconoNotificacion').classList.add('bi', 'bi-exclamation-square');
+        document
+            .getElementById('iconoNotificacion')
+            .classList.add('bi', 'bi-exclamation-square');
     }
 
     function crearColorNotificacion(color) {
         let elementoNotificacion = document.getElementById('notificacion');
-        elementoNotificacion.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue(color);
-
+        elementoNotificacion.style.backgroundColor = getComputedStyle(
+            document.documentElement
+        ).getPropertyValue(color);
     }
 
     function crearLoader(elementoPadre) {
@@ -265,7 +368,7 @@
     }
 
     function eliminarTabla() {
-        let tabla = document.getElementById('tablaContactos')
+        let tabla = document.getElementById('tablaContactos');
         if (tabla) tabla.remove();
     }
 </script>
